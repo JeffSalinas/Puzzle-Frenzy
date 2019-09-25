@@ -34,10 +34,10 @@ class App extends Component {
     mountLevel() {
         let newBoard = []
         console.log('hello')
-        for (let i = 0; i < levels[levelArray[this.state.level]].length; i++) {
+        for (let i = 0; i < levels[levelArray[this.state.level]].board.length; i++) {
             let row = [];
-            for (let j = 0; j < levels[levelArray[this.state.level]][i].length; j++) {
-                row.push(levels[levelArray[this.state.level]][i][j]);
+            for (let j = 0; j < levels[levelArray[this.state.level]].board[i].length; j++) {
+                row.push(levels[levelArray[this.state.level]].board[i][j]);
             }
             newBoard.push(row);
         }
@@ -167,7 +167,7 @@ class App extends Component {
                     newBoard[rowIndex][col - 2] = './img/black.png';
                     change = true;
                 } else if (count[rowArray[col]] > 3) {
-                    count[rowArray[col]] = './img/black.png';
+                    newBoard[rowIndex][col] = './img/black.png';
                 }
             }
         });
@@ -216,9 +216,6 @@ class App extends Component {
                 setTimeout(() => { this.shiftLeft(); }, 400);
             });
         } 
-        // else {
-        //     this.checkCompete();
-        // }
     };
 
     checkCompete() {

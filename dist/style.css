@@ -24,7 +24,7 @@
   height: 40px;
   width: 432px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .blocks {
@@ -33,6 +33,7 @@
 }
 
 #topSelect {
+  margin:-3px;
   border: 3px solid red;
   border-left: 3px solid red;
   border-right: 3px solid red;
@@ -40,6 +41,7 @@
 }
 
 #bottomSelect {
+  margin:-3px;
   border: 3px solid red;
   border-left: 3px solid red;
   border-right: 3px solid red;
