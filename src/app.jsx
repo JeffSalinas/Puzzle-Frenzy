@@ -9,7 +9,6 @@ class App extends Component {
         this.state = {
             level: 0,
             boardView: [],
-            selector: [],
             selecterTop: { 
                 row: 1,
                 col: 0
@@ -19,6 +18,9 @@ class App extends Component {
 
     componentDidMount() {
         this.mountLevel()
+        document.addEventListener("keydown", (event) => {
+            this.move(event)
+        });
     }
 
 
@@ -42,6 +44,42 @@ class App extends Component {
 
 
         this.setState({ boardView: newBoard, selector: newSelector }, () => console.log('made board!'))
+    }
+
+    move(event) {
+        let newBoard = this.state.boardView.slice();
+        let newSelector = {
+            row: this.state.selecterTop.row,
+            col: this.state.selecterTop.col
+        }
+
+        if (event.key === 'ArrowLeft') {
+            if (newSelector.col === 0) {
+                return;
+            }
+            newSelector.col = newSelector.col - 1
+
+        } else if (event.key === 'ArrowRight') {
+            if (newSelector.col === 9) {
+                return;
+            }
+            newSelector.col = newSelector.col + 1
+            
+        } else if (event.key === 'ArrowDown') {
+            if (newSelector.row === 4) {
+                return;
+            }
+            newSelector.row = newSelector.row + 1
+
+        } else if (event.key === 'ArrowUp') {
+            if (newSelector.row === 0) {
+                return;
+            }
+            newSelector.row = newSelector.row - 1
+        } else {
+            return
+        }
+        this.setState({selecterTop: newSelector}, () => console.log('moved'))
     }
 
     render() {
