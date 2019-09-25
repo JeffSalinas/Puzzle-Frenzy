@@ -33,8 +33,7 @@ class App extends Component {
 
     mountLevel() {
         let newBoard = []
-        let newSelect = [];
-
+        console.log('hello')
         for (let i = 0; i < levels[levelArray[this.state.level]].length; i++) {
             let row = [];
             for (let j = 0; j < levels[levelArray[this.state.level]][i].length; j++) {
@@ -44,7 +43,7 @@ class App extends Component {
         }
 
 
-        this.setState({ boardView: newBoard, select: newSelect }, () => console.log('move  board!'))
+        this.setState({ boardView: newBoard}, () => console.log('move  board!'))
     }
 
     move(event) {
@@ -123,6 +122,7 @@ class App extends Component {
         });
     
         this.setState({ boardView: newBoard }, () => {
+            setTimeout(() => { this.checkCompete(); }, 250);
             setTimeout(() => { this.checkMatches(); }, 400);
         });
     }
@@ -215,8 +215,32 @@ class App extends Component {
             this.setState({ boardView: newBoard}, () => {
                 setTimeout(() => { this.shiftLeft(); }, 400);
             });
-        }
+        } 
+        // else {
+        //     this.checkCompete();
+        // }
     };
+
+    checkCompete() {
+        let newBoard = this.state.boardView.map(array => {
+            return array.slice();
+        });
+        let win = true;
+
+        newBoard = newBoard.flat()
+        for (let block of newBoard) {
+            console.log(block)
+            if (block !== './img/empty.png') {
+                win = false;
+            }
+        }
+        if (win) {
+            let currentlvl = this.state.level;
+            console.log(currentlvl);
+            this.setState({ level: currentlvl + 1 }, () => this.mountLevel());
+            
+        }
+    }
 
     render() {
         return (
