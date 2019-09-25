@@ -9,7 +9,7 @@ class App extends Component {
         this.state = {
             level: 0,
             boardView: [],
-            selecterTop: { 
+            selectTop: { 
                 row: 1,
                 col: 0
             }
@@ -23,16 +23,17 @@ class App extends Component {
         });
     }
 
-
     turnToBrick(e, row, index) {
-        let newBoard = this.state.boardView.slice();
+        let newBoard = this.state.boardView.map(array => {
+            return array.slice();
+        });
         newBoard[row][index] = './img/dots.png';
         this.setState(() => { return { boardView: newBoard } });
     }
 
     mountLevel() {
         let newBoard = []
-        let newSelector = [];
+        let newSelect = [];
 
         for (let i = 0; i < levels[levelArray[this.state.level]].length; i++) {
             let row = [];
@@ -43,44 +44,179 @@ class App extends Component {
         }
 
 
-        this.setState({ boardView: newBoard, selector: newSelector }, () => console.log('made board!'))
+        this.setState({ boardView: newBoard, select: newSelect }, () => console.log('move  board!'))
     }
 
     move(event) {
-        let newBoard = this.state.boardView.slice();
-        let newSelector = {
-            row: this.state.selecterTop.row,
-            col: this.state.selecterTop.col
+        let newSelect = {
+            row: this.state.selectTop.row,
+            col: this.state.selectTop.col
         }
 
+
         if (event.key === 'ArrowLeft') {
-            if (newSelector.col === 0) {
+            if (newSelect.col === 0) {
                 return;
             }
-            newSelector.col = newSelector.col - 1
+            newSelect.col = newSelect.col - 1
 
         } else if (event.key === 'ArrowRight') {
-            if (newSelector.col === 9) {
+            if (newSelect.col === 9) {
                 return;
             }
-            newSelector.col = newSelector.col + 1
+            newSelect.col = newSelect.col + 1
             
         } else if (event.key === 'ArrowDown') {
-            if (newSelector.row === 4) {
+            if (newSelect.row === 4) {
                 return;
             }
-            newSelector.row = newSelector.row + 1
+            newSelect.row = newSelect.row + 1
 
         } else if (event.key === 'ArrowUp') {
-            if (newSelector.row === 0) {
+            if (newSelect.row === 0) {
                 return;
             }
-            newSelector.row = newSelector.row - 1
+            newSelect.row = newSelect.row - 1
+        } else if (event.key === 'Enter') {
+            this.swapBlocks();
         } else {
             return
         }
-        this.setState({selecterTop: newSelector}, () => console.log('moved'))
+        this.setState({selectTop: newSelect}, () => console.log('moved'))
     }
+
+    swapBlocks() {
+        let row = this.state.selectTop.row;
+        let col = this.state.selectTop.col;
+        let newBoard = this.state.boardView.map(array => {
+            return array.slice();
+        });
+        let temp = newBoard[row][col];
+
+        newBoard[row][col] = newBoard[row + 1][col]
+        newBoard[row + 1][col] = temp;
+
+        this.setState({ boardView: newBoard }, () => this.shiftLeft());
+    }
+
+    shiftLeft() {
+        let newBoard = this.state.boardView.map(array => {
+            return array.slice();
+        });
+        
+        newBoard.forEach((rowArray, rowIndex) => {
+            let empty = [];
+            for (let col = 0; col < rowArray.length; col++) {
+                if (rowArray[col] === './img/empty.png') {
+                    empty.push(col);
+                }
+                if (rowArray[col] === './img/black.png') {
+                    newBoard[rowIndex][col] = './img/empty.png';
+                    empty.push(col);
+                }
+            }
+            empty.reverse();
+            empty.forEach(colIndex => {
+                newBoard[rowIndex].push(newBoard[rowIndex].splice(colIndex,1)[0]);
+            });
+
+        });
+    
+        this.setState({ boardView: newBoard }, () => {
+            setTimeout(() => { this.checkMatches(); }, 400);
+        });
+    }
+
+    checkMatches() {
+        let newBoard = this.state.boardView.map(array => {
+            return array.slice();
+        });
+        let change = false;
+////////////////////////////////////////////////////////////////
+////////////////////////  CHECK ROWS   /////////////////////////
+
+        newBoard.forEach((rowArray, rowIndex) => {
+            let count = {
+                './img/box.png': 0,
+                './img/dot.png': 0,
+                './img/dots.png': 0,
+                './img/four_box.png': 0,
+                './img/smiley.png': 0
+            }
+            let prevBlock = '';
+
+            for (let col = 0; col < rowArray.length; col++) {
+                if (rowArray[col] === './img/empty.png' || rowArray[col] !== prevBlock) {
+                    count['./img/box.png'] = 0;
+                    count['./img/dot.png'] = 0;
+                    count['./img/dots.png'] = 0;
+                    count['./img/four_box.png'] = 0;
+                    count['./img/smiley.png'] = 0 ;
+                }
+                if (rowArray[col] === './img/empty.png') {
+                    continue;
+                }
+
+
+                prevBlock = rowArray[col];
+                count[rowArray[col]]++;
+
+                if (count[rowArray[col]] === 3) {
+                    newBoard[rowIndex][col] = './img/black.png';
+                    newBoard[rowIndex][col - 1] = './img/black.png';
+                    newBoard[rowIndex][col - 2] = './img/black.png';
+                    change = true;
+                } else if (count[rowArray[col]] > 3) {
+                    count[rowArray[col]] = './img/black.png';
+                }
+            }
+        });
+
+////////////////////////////////////////////////////////////////
+////////////////////////  CHECK COLUMNS   /////////////////////////
+        for (let col = 0; col < newBoard[0].length; col++) {
+            let count = {
+                './img/box.png': 0,
+                './img/dot.png': 0,
+                './img/dots.png': 0,
+                './img/four_box.png': 0,
+                './img/smiley.png': 0
+            }
+            let prevBlock = '';
+
+            for (let row = 0; row < newBoard.length; row++) {
+                if (newBoard[row][col] === './img/empty.png' || newBoard[row][col] !== prevBlock) {
+                    count['./img/box.png'] = 0;
+                    count['./img/dot.png'] = 0;
+                    count['./img/dots.png'] = 0;
+                    count['./img/four_box.png'] = 0;
+                    count['./img/smiley.png'] = 0;
+                }
+                if (newBoard[row][col] === './img/empty.png') {
+                    continue;
+                }
+
+                prevBlock = newBoard[row][col];
+                count[newBoard[row][col]]++;
+
+                if (count[newBoard[row][col]] === 3) {
+                    newBoard[row][col] = './img/black.png';
+                    newBoard[row - 1][col] = './img/black.png';
+                    newBoard[row - 2][col] = './img/black.png';
+                    change = true;
+                } else if (count[newBoard[row][col]] > 3) {
+                    newBoard[row][col] = './img/black.png';
+                }
+            }
+        }
+
+
+        if (change) {
+            this.setState({ boardView: newBoard}, () => {
+                setTimeout(() => { this.shiftLeft(); }, 400);
+            });
+        }
+    };
 
     render() {
         return (
@@ -89,7 +225,7 @@ class App extends Component {
                     {this.state.boardView.map((row, index) => {
                         return (
                             <Row
-                                selecterTop={this.state.selecterTop}
+                                selectTop={this.state.selectTop}
                                 row={row}
                                 turnToBrick = { this.turnToBrick.bind(this) }
                                 rowIndex = { index }

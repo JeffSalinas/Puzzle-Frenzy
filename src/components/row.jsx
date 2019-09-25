@@ -8,7 +8,7 @@ const Row = (props) => {
       {props.row.map((block, i) => {
         return (
           <Space
-            selecterTop={props.selecterTop}
+            selectTop={props.selectTop}
             turnToBrick={props.turnToBrick}
             img={block}
             row={props.rowIndex}
