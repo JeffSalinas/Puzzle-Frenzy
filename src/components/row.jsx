@@ -4,7 +4,7 @@ import Space from './space.jsx';
 const Row = (props) => {
 
   return (
-    <>
+    <div className="rows">
       {props.row.map((block, i) => {
         return (
           <Space
@@ -17,7 +17,7 @@ const Row = (props) => {
           />
         )
       })}
-    </>
+    </div>
   )
 }
 

@@ -9,6 +9,7 @@ class App extends Component {
         this.state = {
             level: 0,
             boardView: [],
+            selector: [],
             selecterTop: { 
                 row: 1,
                 col: 0
@@ -29,6 +30,7 @@ class App extends Component {
 
     mountLevel() {
         let newBoard = []
+        let newSelector = [];
 
         for (let i = 0; i < levels[levelArray[this.state.level]].length; i++) {
             let row = [];
@@ -38,23 +40,26 @@ class App extends Component {
             newBoard.push(row);
         }
 
-        this.setState({ boardView: newBoard }, () => console.log('made board!'))
+
+        this.setState({ boardView: newBoard, selector: newSelector }, () => console.log('made board!'))
     }
 
     render() {
         return (
-            <div id="gameBoard">
-                {this.state.boardView.map((row, index) => {
-                    return (
-                        <Row
-                            selecterTop={this.state.selecterTop}
-                            row={row}
-                            turnToBrick = { this.turnToBrick.bind(this) }
-                            rowIndex = { index }
-                            key = { index }
-                        />
-                    )
-                })}
+            <div id="container">
+                <div id="gameBoard">
+                    {this.state.boardView.map((row, index) => {
+                        return (
+                            <Row
+                                selecterTop={this.state.selecterTop}
+                                row={row}
+                                turnToBrick = { this.turnToBrick.bind(this) }
+                                rowIndex = { index }
+                                key = { index }
+                            />
+                        )
+                    })}
+                </div>
                 <div id="bottomSpace"></div>
             </div>
         )

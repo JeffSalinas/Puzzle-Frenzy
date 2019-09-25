@@ -1,12 +1,16 @@
+#container {
+  border: 1px solid black;
+  height: 288px;
+  width: 432px;
+}
+
 #gameBoard {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  border: 1px solid black;
-  height: 288px;
+  height: 261px;
   width: 432px;
-  padding: 3px 0 0 0;
-  justify-content: space-evenly;
+  align-content: space-around;
 }
 
 #bottomSpace {
@@ -16,19 +20,28 @@
   align-self: flex-end;
 }
 
+.rows {
+  height: 40px;
+  width: 432px;
+  display: flex;
+  justify-content: space-around;
+}
+
 .blocks {
   width: 40px;
   height: 40px;
 }
 
-/* #topSelect {
-  border-top: 3px solid black;
-  border-left: 3px solid black;
-  border-right: 3px solid black;
+#topSelect {
+  border: 3px solid red;
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+  background: red;
 }
 
 #bottomSelect {
-  border-bottom: 3px solid black;
-  border-left: 3px solid black;
-  border-right: 3px solid black;
-} */
+  border: 3px solid red;
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+  background: red;
+}

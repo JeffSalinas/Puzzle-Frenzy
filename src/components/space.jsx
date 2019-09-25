@@ -4,12 +4,12 @@ const Space = (props) => {
 
   let newId = 'none';
 
-  // if (props.selecterTop.row === props.row && props.selecterTop.col === props.col) {
-  //   newId = 'topSelect';
-  // }
-  // if (props.selecterTop.row + 1 === props.row && props.selecterTop.col === props.col) {
-  //   newId = 'bottomSelect';
-  // }
+  if (props.selecterTop.row === props.row && props.selecterTop.col === props.col) {
+    newId = 'topSelect';
+  }
+  if (props.selecterTop.row + 1 === props.row && props.selecterTop.col === props.col) {
+    newId = 'bottomSelect';
+  }
 
   return (
     <>
