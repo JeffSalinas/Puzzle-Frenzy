@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import levels from './components/Levels';
 import Row from './components/row.jsx';
+import Popup from './components/popup.jsx';
 const levelArray = Object.keys(levels);
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            start: true,
             level: 0,
             boardView: [],
             selectTop: { 
@@ -33,7 +35,7 @@ class App extends Component {
 
     mountLevel() {
         let newBoard = []
-        console.log('hello')
+
         for (let i = 0; i < levels[levelArray[this.state.level]].board.length; i++) {
             let row = [];
             for (let j = 0; j < levels[levelArray[this.state.level]].board[i].length; j++) {
@@ -47,6 +49,15 @@ class App extends Component {
     }
 
     move(event) {
+        if (this.state.start) {
+            if (this.state.start) {
+                this.setState(() => { return { start: false }; });
+            }
+            
+            return;
+        }
+
+
         let newSelect = {
             row: this.state.selectTop.row,
             col: this.state.selectTop.col
@@ -77,6 +88,7 @@ class App extends Component {
             }
             newSelect.row = newSelect.row - 1
         } else if (event.key === 'Enter') {
+
             this.swapBlocks();
         } else {
             return
@@ -232,16 +244,17 @@ class App extends Component {
             }
         }
         if (win) {
-            let currentlvl = this.state.level;
-            console.log(currentlvl);
-            this.setState({ level: currentlvl + 1 }, () => this.mountLevel());
+            
+            this.setState({ level: this.state.level + 1, start: true }, () => this.mountLevel());
             
         }
     }
 
     render() {
+
         return (
             <div id="container">
+                {this.state.start ? <Popup level={levels[levelArray[this.state.level]]} currentlvl={this.state.level + 1}/> : null }
                 <div id="gameBoard">
                     {this.state.boardView.map((row, index) => {
                         return (
