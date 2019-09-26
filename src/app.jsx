@@ -47,8 +47,22 @@ class App extends Component {
             newBoard.push(row);
         }
 
+        this.setState({ boardView: newBoard}, () => this.setSelector());
+    }
 
-        this.setState({ boardView: newBoard}, () => console.log('move  board!'))
+    setSelector() {
+        let newSelect = {
+            row: 0,
+            col: 0
+        }
+        for (let r = 0; r < 4; r++) {
+            if (this.state.boardView[r][0] !== './img/empty.png') {
+                newSelect.row = r;
+                break;
+            }
+        }
+
+        this.setState({ selectTop: newSelect});
     }
 
     move(event) {
@@ -178,7 +192,7 @@ class App extends Component {
 
                 prevBlock = rowArray[col];
                 count[rowArray[col]]++;
-
+                
                 if (count[rowArray[col]] === 3) {
                     newBoard[rowIndex][col] = './img/black.png';
                     newBoard[rowIndex][col - 1] = './img/black.png';
@@ -228,10 +242,11 @@ class App extends Component {
             }
         }
 
-
+////////
         if (change) {
             this.setState({ boardView: newBoard}, () => {
-                this.shiftLeft();
+                setTimeout(() => this.shiftLeft(), 400);
+                
             });
         } else {
             this.checkCompete();
@@ -256,11 +271,7 @@ class App extends Component {
         } else if (this.state.move === levels[levelArray[this.state.level]].moves) {
             this.setState({ move: 0, start: true, outOfMoves: true }, () => {
                 setTimeout(() => {
-                    console.log(this);
-                    this.setState({ outOfMoves: false }, () => {
-                        console.log('hello');
-                        console.log(this);
-                        
+                    this.setState({ outOfMoves: false }, () => { 
                         this.mountLevel();
                     });
                 }, 900);
