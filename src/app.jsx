@@ -10,7 +10,7 @@ class App extends Component {
         super(props)
         this.state = {
             start: true,
-            level: 11,
+            level: 0,
             boardView: [],
             selectTop: { 
                 row: 1,
