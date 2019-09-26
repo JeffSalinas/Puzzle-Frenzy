@@ -92,6 +92,7 @@ class App extends Component {
     }
 
     move(event) {
+        event.preventDefault();
         if (this.state.pswdScreen) {
             if (this.state.start) {
                 this.setState(() => { return { pswdScreen: false }; });
@@ -301,7 +302,7 @@ class App extends Component {
         if (win) {
             this.setState({ level: this.state.level + 1, start: true, move: 0 }, () => this.mountLevel());
             return;
-        } else if (this.state.move === levels[levelArray[this.state.level]].moves) {
+        } else if (this.state.move >= levels[levelArray[this.state.level]].moves) {
             this.setState({ move: 0, start: true, outOfMoves: true }, () => {
                 setTimeout(() => {
                     this.setState({ outOfMoves: false }, () => { 
