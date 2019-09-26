@@ -16,8 +16,7 @@ class App extends Component {
                 row: 1,
                 col: 0
             },
-            move: 0,
-            outOfMoves: false
+            move: 0
         };
     }
 
@@ -279,22 +278,55 @@ class App extends Component {
     render() {
 
         return (
-            <div id="container">
-                { this.state.start ? <Popup level={levels[levelArray[this.state.level]]} currentlvl={this.state.level + 1}/> : null }
-                {this.state.outOfMoves ? <Out /> : null }
-                <div id="gameBoard">
-                    {this.state.boardView.map((row, index) => {
-                        return (
-                            <Row
-                                selectTop={this.state.selectTop}
-                                row={row}
-                                rowIndex = { index }
-                                key = { index }
-                            />
-                        )
-                    })}
+            <div>
+                <div id="container">
+                    { this.state.start ? <Popup level={levels[levelArray[this.state.level]]} currentlvl={this.state.level + 1}/> : null }
+                    {this.state.outOfMoves ? <Out /> : null }
+
+                    <div id="gameBoard">
+                        {this.state.boardView.map((row, index) => {
+                            return (
+                                <Row
+                                    selectTop={this.state.selectTop}
+                                    row={row}
+                                    rowIndex = { index }
+                                    key = { index }
+                                />
+                            )
+                        })}
+                    </div>
+                    { this.state.level < 8 ? 
+                    <p id="booyah" style={{
+                        fontSize: `${this.state.level * 2}px`, margin: `-${this.state.level - 5}px 0` }}>
+                        {this.state.start && this.state.level !== 0 ? 'booyah!' : null}
+                    </p> : 
+                        this.state.level >= 8 && this.state.level < 15  ? 
+                        <p id="booyah" style={{
+                            fontSize: `${this.state.level * 2}px`, margin: `-${this.state.level - 5}px 0`
+                        }}>
+                            {this.state.start ? 'BOOYAH!!' : null}
+                        </p> :
+                            <p id="booyah" style={{
+                                fontSize: `${this.state.level * 2}px`, margin: `-${this.state.level - 5}px 0`, fontWeight: 'bold'
+                            }}>
+                                {this.state.start ? 'BOOOOYAH!!!!!' : null}
+                            </p>
+                    }
+
+                    <div id="bottomSpace"></div>
                 </div>
-                <div id="bottomSpace"></div>
+
+                <p className="instructTitles">Objective:</p> 
+                <ul>
+                    <li>Clear each block to complete each level</li>
+                    <li>Line up 3 or more blocks of the same variety to clear blocks</li>
+                    <li>Be careful! You have a limited number of moves for each level</li>
+                </ul>
+                <p className="instructTitles">Controles:</p>
+                <ul>
+                    <li>Use arrow keys to move selector</li>
+                    <li>Press "Enter" to swap the blocks in the selector window</li>
+                </ul>
             </div>
         )
     }

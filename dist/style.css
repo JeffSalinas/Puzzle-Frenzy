@@ -1,5 +1,4 @@
 #container {
-  position: absolute;
   border: 1px solid black;
   height: 288px;
   width: 432px;
@@ -19,6 +18,12 @@
   width: 432px;
   height:27px;
   align-self: flex-end;
+}
+
+#booyah{
+  position: absolute;
+  align-self: flex-end;
+  z-index: 1;
 }
 
 .rows {
@@ -104,4 +109,13 @@ h3 {
   width: 150px;
   font-size: 20px;
   padding: 0 25px;
+}
+
+.instructTitles {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+ul {
+  margin: 5px 0;
 }
