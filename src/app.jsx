@@ -10,7 +10,7 @@ class App extends Component {
         super(props)
         this.state = {
             start: true,
-            level: 0,
+            level: 11,
             boardView: [],
             selectTop: { 
                 row: 1,
@@ -26,14 +26,6 @@ class App extends Component {
         document.addEventListener("keydown", (event) => {
             this.move(event)
         });
-    }
-
-    turnToBrick(e, row, index) {
-        let newBoard = this.state.boardView.map(array => {
-            return array.slice();
-        });
-        newBoard[row][index] = './img/dots.png';
-        this.setState(() => { return { boardView: newBoard } });
     }
 
     mountLevel() {
@@ -163,11 +155,12 @@ class App extends Component {
         let newBoard = this.state.boardView.map(array => {
             return array.slice();
         });
+
         let change = false;
 ////////////////////////////////////////////////////////////////
 ////////////////////////  CHECK ROWS   /////////////////////////
 
-        newBoard.forEach((rowArray, rowIndex) => {
+        this.state.boardView.forEach((rowArray, rowIndex) => {
             let count = {
                 './img/box.png': 0,
                 './img/dot.png': 0,
@@ -206,7 +199,7 @@ class App extends Component {
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////  CHECK COLUMNS   /////////////////////////
-        for (let col = 0; col < newBoard[0].length; col++) {
+        for (let col = 0; col < this.state.boardView[0].length; col++) {
             let count = {
                 './img/box.png': 0,
                 './img/dot.png': 0,
@@ -216,33 +209,36 @@ class App extends Component {
             }
             let prevBlock = '';
 
-            for (let row = 0; row < newBoard.length; row++) {
-                if (newBoard[row][col] === './img/empty.png' || newBoard[row][col] !== prevBlock) {
+            for (let row = 0; row < this.state.boardView.length; row++) {
+                if (this.state.boardView[row][col] === './img/empty.png' || this.state.boardView[row][col] !== prevBlock) {
                     count['./img/box.png'] = 0;
                     count['./img/dot.png'] = 0;
                     count['./img/dots.png'] = 0;
                     count['./img/four_box.png'] = 0;
                     count['./img/smiley.png'] = 0;
                 }
-                if (newBoard[row][col] === './img/empty.png') {
+                if (this.state.boardView[row][col] === './img/empty.png') {
                     continue;
                 }
 
-                prevBlock = newBoard[row][col];
-                count[newBoard[row][col]]++;
-
-                if (count[newBoard[row][col]] === 3) {
+                prevBlock = this.state.boardView[row][col];
+                count[this.state.boardView[row][col]]++;
+                if (count['./img/box.png'] === 2) {
+                    console.log(count);
+                    console.log(newBoard);
+                }
+                if (count[this.state.boardView[row][col]] === 3) {
                     newBoard[row][col] = './img/black.png';
                     newBoard[row - 1][col] = './img/black.png';
                     newBoard[row - 2][col] = './img/black.png';
                     change = true;
-                } else if (count[newBoard[row][col]] > 3) {
+                } else if (count[this.state.boardView[row][col]] > 3) {
                     newBoard[row][col] = './img/black.png';
                 }
             }
         }
 
-////////
+
         if (change) {
             this.setState({ boardView: newBoard}, () => {
                 setTimeout(() => this.shiftLeft(), 400);
@@ -292,7 +288,6 @@ class App extends Component {
                             <Row
                                 selectTop={this.state.selectTop}
                                 row={row}
-                                turnToBrick = { this.turnToBrick.bind(this) }
                                 rowIndex = { index }
                                 key = { index }
                             />

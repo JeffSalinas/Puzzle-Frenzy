@@ -128,14 +128,44 @@ const lvl10 = {
   ]
 };
 
-module.exports = { lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8, lvl9, lvl10 };
+const lvl11 = {
+  password: 't00',
+  moves: 2,
+  board: [
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/dot.png', './img/dot.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/dot.png', './img/dot.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/dot.png', './img/dot.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png']
+  ]
+};
+
+const lvl12 = {
+  password: 'vH5',
+  moves: 1,
+  board: [
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/smiley.png', './img/smiley.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/box.png', './img/dot.png', './img/dot.png', './img/smiley.png', './img/dot.png', './img/box.png', './img/box.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/four_box.png', './img/four_box.png', './img/box.png', './img/dot.png', './img/four_box.png', './img/four_box.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/dots.png', './img/dots.png', './img/box.png', './img/dot.png', './img/dots.png', './img/dots.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png']
+  ]
+};
+
+module.exports = { lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8, lvl9, lvl10, lvl11, lvl12 };
 /*
-const lvl1 = [
-  ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
-  ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
-  ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
-  ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
-  ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
-  ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png']
-];
+const lvl1 = {
+  password: 'rH9',
+  moves: 1,
+  board: [
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png'],
+    ['./img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png', './img/empty.png']
+  ]
+};
 */

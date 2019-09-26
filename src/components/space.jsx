@@ -13,8 +13,7 @@ const Space = (props) => {
 
   return (
     <>
-      <img id={newId} className="blocks" onClick={() => props.turnToBrick(null, props.row, props.col)} src={props.img}></img>
-      {/* <img id={props.id} className="blocks" src={props.img}></img> */}
+      <img id={newId} className="blocks" src={props.img}></img>
     </>
   )
 }

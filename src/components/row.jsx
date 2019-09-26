@@ -9,7 +9,6 @@ const Row = (props) => {
         return (
           <Space
             selectTop={props.selectTop}
-            turnToBrick={props.turnToBrick}
             img={block}
             row={props.rowIndex}
             col={i}
