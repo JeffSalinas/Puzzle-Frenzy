@@ -3,6 +3,7 @@ import levels from './components/Levels';
 import Row from './components/row.jsx';
 import Popup from './components/popup.jsx';
 import Out from './components/out.jsx';
+import Password from './components/password.jsx';
 const levelArray = Object.keys(levels);
 
 class App extends Component {
@@ -16,15 +17,49 @@ class App extends Component {
                 row: 1,
                 col: 0
             },
-            move: 0
+            move: 0,
+            pswdScreen: true,
+            lastPasswordKey: ''
         };
     }
 
     componentDidMount() {
         this.mountLevel()
         document.addEventListener("keydown", (event) => {
+            if (event.target.nodeName == 'INPUT') {
+                this.passwordHandler(event);
+                return;
+            }
             this.move(event)
         });
+    }
+
+    passwordHandler(event) {
+        if (event.key === 'Enter') {
+            if (this.state.lastPasswordKey === 'Enter') {
+                this.move(event);
+            }
+
+            for (let lvl = 0; lvl < levelArray.length; lvl++) {
+                if (levels[levelArray[lvl]].password === event.target.value) {
+                    event.target.value = 'Kubernetes!'
+
+                    setTimeout(() => {
+                        this.setState({level: lvl, pswdScreen: false}, () => {
+                            this.mountLevel();
+                        })
+                    }, 500)
+                    return;
+                }
+            }
+
+            event.target.value = ''
+            this.setState(() => {
+               return {lastPasswordKey: 'Enter'};
+            });
+        } else {
+            return;
+        }
     }
 
     mountLevel() {
@@ -57,6 +92,12 @@ class App extends Component {
     }
 
     move(event) {
+        if (this.state.pswdScreen) {
+            if (this.state.start) {
+                this.setState(() => { return { pswdScreen: false }; });
+            }
+            return;
+        }
         if (this.state.start) {
             if (this.state.start) {
                 this.setState(() => { return { start: false }; });
@@ -222,10 +263,7 @@ class App extends Component {
 
                 prevBlock = this.state.boardView[row][col];
                 count[this.state.boardView[row][col]]++;
-                if (count['./img/box.png'] === 2) {
-                    console.log(count);
-                    console.log(newBoard);
-                }
+
                 if (count[this.state.boardView[row][col]] === 3) {
                     newBoard[row][col] = './img/black.png';
                     newBoard[row - 1][col] = './img/black.png';
@@ -282,7 +320,7 @@ class App extends Component {
                 <div id="container">
                     { this.state.start ? <Popup level={levels[levelArray[this.state.level]]} currentlvl={this.state.level + 1}/> : null }
                     {this.state.outOfMoves ? <Out /> : null }
-
+                    {this.state.pswdScreen ? <Password />: null}
                     <div id="gameBoard">
                         {this.state.boardView.map((row, index) => {
                             return (
