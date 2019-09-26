@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Popup = (props) => {
+const Out = (props) => {
 
   return (
     ReactDOM.createPortal(
@@ -9,16 +9,13 @@ const Popup = (props) => {
         <div className="title">
           <h3>Tricky Tricky!</h3>
         </div>
-        <div id="text">
-            Level: {props.currentlvl}<br></br>
-            Moves: {props.level.moves}<br></br>
-            Password: {props.level.password}
+        <div id="text2">
+          Try Again!
         </div>
-        <p id="instruction">*Press Any Key To Begin*</p>
       </div>,
       document.getElementById('popup')
     )
   )
 }
 
-export default Popup;
+export default Out;

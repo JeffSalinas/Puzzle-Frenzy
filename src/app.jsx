@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import levels from './components/Levels';
 import Row from './components/row.jsx';
 import Popup from './components/popup.jsx';
+import Out from './components/out.jsx';
 const levelArray = Object.keys(levels);
 
 class App extends Component {
@@ -14,7 +15,9 @@ class App extends Component {
             selectTop: { 
                 row: 1,
                 col: 0
-            }
+            },
+            move: 0,
+            outOfMoves: false
         };
     }
 
@@ -53,10 +56,11 @@ class App extends Component {
             if (this.state.start) {
                 this.setState(() => { return { start: false }; });
             }
-            
-            return;
+            if (event.key === 'Enter') {
+                return;
+            }
         }
-
+        let currentMove = this.state.move;
 
         let newSelect = {
             row: this.state.selectTop.row,
@@ -88,14 +92,17 @@ class App extends Component {
             }
             newSelect.row = newSelect.row - 1
         } else if (event.key === 'Enter') {
-
+            currentMove++;
             this.swapBlocks();
         } else {
             return
         }
-        this.setState({selectTop: newSelect}, () => console.log('moved'))
-    }
 
+        this.setState(() => {
+            return {selectTop: newSelect, move: currentMove}
+        });
+    };
+    
     swapBlocks() {
         let row = this.state.selectTop.row;
         let col = this.state.selectTop.col;
@@ -108,7 +115,7 @@ class App extends Component {
         newBoard[row + 1][col] = temp;
 
         this.setState({ boardView: newBoard }, () => this.shiftLeft());
-    }
+    };
 
     shiftLeft() {
         let newBoard = this.state.boardView.map(array => {
@@ -134,8 +141,7 @@ class App extends Component {
         });
     
         this.setState({ boardView: newBoard }, () => {
-            setTimeout(() => { this.checkCompete(); }, 250);
-            setTimeout(() => { this.checkMatches(); }, 400);
+            setTimeout(() => { this.checkMatches(); }, 350);
         });
     }
 
@@ -225,9 +231,11 @@ class App extends Component {
 
         if (change) {
             this.setState({ boardView: newBoard}, () => {
-                setTimeout(() => { this.shiftLeft(); }, 400);
+                this.shiftLeft();
             });
-        } 
+        } else {
+            this.checkCompete();
+        }
     };
 
     checkCompete() {
@@ -238,23 +246,35 @@ class App extends Component {
 
         newBoard = newBoard.flat()
         for (let block of newBoard) {
-            console.log(block)
             if (block !== './img/empty.png') {
                 win = false;
             }
         }
         if (win) {
-            
-            this.setState({ level: this.state.level + 1, start: true }, () => this.mountLevel());
-            
+            this.setState({ level: this.state.level + 1, start: true, move: 0 }, () => this.mountLevel());
+            return;
+        } else if (this.state.move === levels[levelArray[this.state.level]].moves) {
+            this.setState({ move: 0, start: true, outOfMoves: true }, () => {
+                setTimeout(() => {
+                    console.log(this);
+                    this.setState({ outOfMoves: false }, () => {
+                        console.log('hello');
+                        console.log(this);
+                        
+                        this.mountLevel();
+                    });
+                }, 900);
+            });
         }
+        return;
     }
 
     render() {
 
         return (
             <div id="container">
-                {this.state.start ? <Popup level={levels[levelArray[this.state.level]]} currentlvl={this.state.level + 1}/> : null }
+                { this.state.start ? <Popup level={levels[levelArray[this.state.level]]} currentlvl={this.state.level + 1}/> : null }
+                {this.state.outOfMoves ? <Out /> : null }
                 <div id="gameBoard">
                     {this.state.boardView.map((row, index) => {
                         return (
