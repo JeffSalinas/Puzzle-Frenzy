@@ -362,8 +362,8 @@ class App extends Component {
                 </ul>
                 <p className="instructTitles">Controles:</p>
                 <ul>
-                    <li>Use arrow keys to move selector</li>
-                    <li>Press "Enter" to swap the blocks in the selector window</li>
+                    <li>Use <strong>Arrow Keys</strong> to move selector</li>
+                    <li>Use <strong>Enter</strong> to swap the blocks in the selector window</li>
                 </ul>
             </div>
         )
